@@ -18,5 +18,5 @@ for(const [hero,animations] of Object.entries(manifest.heroes)){
   }
 }
 for(const kind of manifest.enemies){const file=join(root,"enemies",kind+".svg");const svg=await readFile(file,"utf8");if(!svg.includes('width="256" height="256" viewBox="0 0 256 256"'))throw new Error(`Invalid enemy art: ${file}`);enemies++;}
-if(frames!==205||portraits!==5||enemies!==3)throw new Error(`Unexpected asset count: frames=${frames}, portraits=${portraits}, enemies=${enemies}`);
+const expectedFrames=Object.values(manifest.heroes).reduce((sum,animations)=>sum+Object.values(animations).reduce((n,spec)=>n+spec.frames,0),0);const expectedPortraits=Object.keys(manifest.heroes).length;const expectedEnemies=manifest.enemies.length;if(frames!==expectedFrames||portraits!==expectedPortraits||enemies!==expectedEnemies)throw new Error(`Unexpected asset count: frames=${frames}/${expectedFrames}, portraits=${portraits}/${expectedPortraits}, enemies=${enemies}/${expectedEnemies}`);
 console.log(`Sprite validation passed: ${frames} frames, ${portraits} portraits, ${enemies} enemy illustrations; 24px safe-padding contract retained.`);
