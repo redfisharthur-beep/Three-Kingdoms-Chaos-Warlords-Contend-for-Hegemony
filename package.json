@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "npm run sprites && tsc -b && vite build",
+    "build": "npm run sprites && npm run check:sprites && tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "sprites": "node scripts/generate_sprite_frames.mjs"
+    "sprites": "node scripts/generate_sprite_frames.mjs",
+    "predev": "npm run sprites",
+    "check:sprites": "node scripts/validate_sprite_frames.mjs"
   },
   "dependencies": {
     "phaser": "^3.90.0",
