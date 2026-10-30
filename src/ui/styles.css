@@ -5,3 +5,40 @@
 @media(max-width:650px){.home{padding:15px 18px}.home-copy{margin:0}.home-copy h1{font-size:37px}.hero-select{gap:16px;justify-content:space-around}.large-art{width:43vw;height:34vh;min-height:190px}.art-silhouette{font-size:25vw}.hero-info{min-width:0;max-width:48vw}.hero-info h2{font-size:29px}.hero-info p{font-size:10px;margin-bottom:10px}.stat-pills{gap:4px}.stat-pills span{font-size:9px;padding:5px 7px}.hero-dots{margin:15px 0}.ultimate-preview small{font-size:9px}.battle-top{height:46px;padding:4px 9px;gap:9px}.hp-block{width:28vw}.touch-layer{height:100px}.ultimate-button{width:76px;height:76px;right:3px}.skill-grid{gap:7px}.skill-card{min-height:142px;padding:12px 6px}.skill-card b{font-size:11px}.skill-card small{font-size:9px}.choice-panel{padding:16px 11px}.left-touch-hint{font-size:8px}.touch-layer{height:104px}.dynamic-stick{width:94px;height:94px}.stick-knob{width:38px;height:38px;margin:-19px}}
 @media(orientation:portrait) and (max-width:800px){.battle-screen:after{content:"請將裝置旋轉為橫向遊玩";position:absolute;inset:0;z-index:30;background:#e9e7e1ed;display:grid;place-items:center;color:#617064;font-size:16px;letter-spacing:.1em;pointer-events:none}.home .home-copy h1{letter-spacing:.1em}}
 @media(min-width:900px){.touch-layer{height:75px}.ultimate-button{width:64px;height:64px;right:12%}.left-touch-hint{left:14%}}
+
+
+/* Visual overhaul: battlefield-first, restrained bronze and charcoal interface. */
+.battle-screen{background:#202629;color:#e8e0d0}
+.battle-top{background:linear-gradient(180deg,#171e20f2,#252c2bf0);border-bottom:1px solid #a88b5b55;color:#e8e0d0;box-shadow:0 8px 24px #080d0e55}
+.player-status b{color:#eee5d4;font-size:12px;letter-spacing:.08em}
+.player-status small,.bar-label,.exp-row{color:#a9a392}
+.avatar-mini{background:linear-gradient(145deg,#b08a56,#72543d);border:1px solid #e2c18c;color:#fff4df;box-shadow:0 0 0 2px #b08a5625}
+.bar,.exp-bar{background:#111719;border:1px solid #665d4d}
+.bar i{background:linear-gradient(90deg,#7e3d3b,#d17c60);box-shadow:0 0 12px #d17c6060}
+.boss-hp{color:#d8b47b}.boss-hp div{background:#171b1c;border:1px solid #77654b}.boss-hp i{background:linear-gradient(90deg,#793c3d,#d1a15f)}
+.timer{color:#e1c28e;font-size:15px;letter-spacing:.08em}
+.pause-btn{background:#333b39;border:1px solid #8f7957;color:#e9d8b8}
+.battle-bottom{background:linear-gradient(0deg,#171e20 0%,#202629f5 75%,#20262900 100%)}
+.exp-row{color:#c1b89f}.exp-bar i{background:linear-gradient(90deg,#718b78,#c1a16b);box-shadow:0 0 9px #c1a16b70}
+.left-touch-hint{display:none}
+.ultimate-button{background:linear-gradient(145deg,#8c704d,#4e4034);border:2px solid #d4b47d;color:#fff1d4;box-shadow:0 0 0 4px #171e2070,0 8px 26px #080c0d99}
+.ultimate-button span{font-size:24px;color:#f0d49b;text-shadow:0 0 12px #f0d49b90}
+.ultimate-button.ready{background:linear-gradient(145deg,#d5b276,#87633d);border-color:#fff0c6;box-shadow:0 0 0 5px #d5b27630,0 0 34px #e2b66b99}
+.overlay{background:#111719c9;backdrop-filter:blur(12px)}
+.choice-panel,.result-panel{background:linear-gradient(145deg,#303936,#202729);border:1px solid #a88b5b80;box-shadow:0 24px 80px #050809b8;color:#eee4d1}
+.choice-panel h2,.result-panel h2{color:#f0dfbd}
+.choice-panel>p,.result-panel>p{color:#b4aa96}
+.skill-card{background:linear-gradient(145deg,#3a423d,#272e2d);border:1px solid #85745380;color:#eee4d1}
+.skill-card:hover,.skill-card:focus-visible{outline:2px solid #d5b276}
+.skill-card small{color:#c0b7a4}
+.skill-icon{background:#b08a5635;color:#e1c18d}
+.skill-pick{color:#e0bd7e}
+.result-stats div{background:#171f20;border:1px solid #84704f66}
+.result-stats b{color:#e3c28d}.result-stats small{color:#b4aa96}
+.battle-screen canvas{filter:contrast(1.04) saturate(.88)}
+/* Keep the entry screen focused on the selected general and the primary action. */
+.season-tag,.home-copy .eyebrow,.home-copy .subline,.art-frame-count,.tip{display:none}
+.home-copy{margin:0}
+.home-copy h1{letter-spacing:.13em;text-shadow:0 8px 26px #39433d18}
+.mode-card{background:#ffffff82}
+@media(max-width:650px){.battle-top{background:#171e20f5}.timer{font-size:13px}.boss-hp{width:22vw}.player-status{min-width:78px}}
