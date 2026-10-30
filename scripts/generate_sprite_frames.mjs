@@ -48,9 +48,9 @@ function svgFrame(id, hero, anim, index, total) {
    <linearGradient id="robe" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p.light}"/><stop offset=".48" stop-color="${p.main}"/><stop offset="1" stop-color="${p.dark}"/></linearGradient>
    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3e2bd"/><stop offset=".5" stop-color="${p.metal}"/><stop offset="1" stop-color="#756b5c"/></linearGradient>
    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f0d7bc"/><stop offset="1" stop-color="#b9856c"/></linearGradient>
-   <filter id="shadow" x="-30%" y="-20%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+   <filter id="shadow" x="-30%" y="-20%" width="160%" height="160%"><feGaussianBlur stdDeviation="2"/></filter>
   </defs>
-  <ellipse cx="128" cy="226" rx="47" ry="4" fill="#4d554d" opacity=".2" filter="url(#shadow)"/>
+  <ellipse cx="128" cy="222" rx="43" ry="3" fill="#4d554d" opacity=".2" filter="url(#shadow)"/>
   ${motion}
   ${dead}
    <g transform="translate(0 ${bob.toFixed(1)}) rotate(${lean.toFixed(1)} 128 145)" opacity="${alpha}">
