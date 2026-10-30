@@ -16,7 +16,8 @@ Mobile-first Three Kingdoms Roguelite prototype built with Phaser 3 + React + Ty
 ```bash
 npm install
 npm run dev
-npm run build
+npm run sprites   # generate 205 individual animation SVG frames + 5 portraits
+npm run build     # sprite generation is included automatically
 ```
 
 ## Cloudflare Pages
