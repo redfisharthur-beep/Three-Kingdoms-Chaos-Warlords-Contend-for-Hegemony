@@ -18,30 +18,30 @@ function svgFrame(id, hero, anim, index, total) {
   const lean=anim==="attack"?Math.sin(index/Math.max(1,total-1)*Math.PI)*12:anim==="ultimate"?Math.sin(phase)*9:0;
   const alpha=anim==="hit"&&index===1?0.8:1;
   const weapon = p.weapon==="halberd"
-    ? '<path d="M194 178 L214 35" stroke="#51464a" stroke-width="7" stroke-linecap="round"/><path d="M197 64 Q180 39 192 24 Q208 38 214 12 Q228 39 215 66 Z" fill="#d4b47f" stroke="#574a48" stroke-width="4"/><path d="M194 58 L218 47" stroke="#f0dfbd" stroke-width="3"/>'
+    ? '<path d="M194 178 L214 29" stroke="#51464a" stroke-width="7" stroke-linecap="round"/><path d="M197 64 Q180 39 192 24 Q208 38 214 12 Q228 39 215 66 Z" fill="#d4b47f" stroke="#574a48" stroke-width="4"/><path d="M194 58 L218 47" stroke="#f0dfbd" stroke-width="3"/>'
     : p.weapon==="spear"
-    ? '<path d="M196 191 L211 30" stroke="#604e42" stroke-width="6" stroke-linecap="round"/><path d="M211 20 L225 55 L211 47 L198 55 Z" fill="#c7d0bd" stroke="#455c57" stroke-width="3"/><path d="M207 55 L216 55" stroke="#f0e4c9" stroke-width="3"/>'
+    ? '<path d="M196 191 L211 30" stroke="#604e42" stroke-width="6" stroke-linecap="round"/><path d="M211 27 L225 58 L211 50 L198 58 Z" fill="#c7d0bd" stroke="#455c57" stroke-width="3"/><path d="M207 55 L216 55" stroke="#f0e4c9" stroke-width="3"/>'
     : p.weapon==="fan"
     ? '<path d="M188 155 L214 93" stroke="#62554b" stroke-width="5"/><path d="M212 98 Q184 78 177 46 Q218 51 234 77 Q231 95 212 98 Z" fill="#d9d0bd" stroke="#59677b" stroke-width="3"/><path d="M212 97 L188 53 M212 97 L207 49 M212 97 L226 56" stroke="#9a8c75" stroke-width="2"/>'
     : p.weapon==="guandao"
     ? '<path d="M190 190 L216 34" stroke="#514a42" stroke-width="7"/><path d="M215 31 Q185 31 179 56 Q194 69 215 54 Q231 40 235 24 Q222 26 215 31 Z" fill="#c8a66f" stroke="#514a42" stroke-width="4"/><path d="M183 58 Q200 66 214 53" stroke="#eee0c0" stroke-width="3" fill="none"/>'
-    : '<path d="M193 176 L218 65" stroke="#594e42" stroke-width="5"/><path d="M212 76 Q232 47 224 25 Q245 42 236 70 Q228 91 208 91" fill="none" stroke="#b99c6c" stroke-width="5"/><path d="M210 82 Q226 59 229 43" stroke="#e4d1a8" stroke-width="2" fill="none"/>';
+    : '<path d="M193 176 L218 65" stroke="#594e42" stroke-width="5"/><path d="M212 76 Q232 47 224 25 Q231 42 229 70 Q224 88 208 91" fill="none" stroke="#b99c6c" stroke-width="5"/><path d="M210 82 Q226 59 229 43" stroke="#e4d1a8" stroke-width="2" fill="none"/>';
   const crest = p.crest==="wing"
-    ? '<path d="M110 48 Q76 7 56 34 Q75 50 103 64 M143 48 Q180 7 200 34 Q179 51 150 64" fill="#a77b70" stroke="#4c4141" stroke-width="4"/>'
+    ? '<path d="M110 48 Q76 26 56 40 Q75 50 103 64 M143 48 Q180 26 200 40 Q179 51 150 64" fill="#a77b70" stroke="#4c4141" stroke-width="4"/>'
     : p.crest==="plume"
-    ? '<path d="M125 49 Q109 14 131 7 Q146 23 139 49" fill="#d4d8c7" stroke="#425c57" stroke-width="3"/>'
+    ? '<path d="M125 49 Q109 27 131 25 Q146 34 139 49" fill="#d4d8c7" stroke="#425c57" stroke-width="3"/>'
     : p.crest==="cap"
-    ? '<path d="M92 48 Q93 13 128 12 Q164 13 165 48 L151 56 L104 56 Z" fill="#46556a" stroke="#d1c6aa" stroke-width="4"/><path d="M90 46 Q128 34 166 46" stroke="#c8b58f" stroke-width="5"/>'
+    ? '<path d="M92 48 Q93 27 128 26 Q164 27 165 48 L151 56 L104 56 Z" fill="#46556a" stroke="#d1c6aa" stroke-width="4"/><path d="M90 46 Q128 34 166 46" stroke="#c8b58f" stroke-width="5"/>'
     : p.crest==="crown"
-    ? '<path d="M91 48 L97 19 L117 37 L129 9 L143 37 L163 19 L168 50 Z" fill="#c9a76d" stroke="#4b463e" stroke-width="4"/>'
-    : '<path d="M91 48 Q91 14 128 12 Q165 14 165 48 L154 55 L102 55 Z" fill="#a58c5e" stroke="#4d473d" stroke-width="4"/><path d="M93 36 L163 36" stroke="#e5d2a8" stroke-width="4"/>';
+    ? '<path d="M91 48 L97 29 L117 40 L129 26 L143 40 L163 29 L168 50 Z" fill="#c9a76d" stroke="#4b463e" stroke-width="4"/>'
+    : '<path d="M91 48 Q91 27 128 26 Q165 27 165 48 L154 55 L102 55 Z" fill="#a58c5e" stroke="#4d473d" stroke-width="4"/><path d="M93 36 L163 36" stroke="#e5d2a8" stroke-width="4"/>';
   const cloak = hero==="lvbu" ? "#554958" : hero==="guanyu" ? "#7e4542" : p.cloth;
   const motion = anim==="run"
     ? '<path d="M44 133 L22 125 M48 150 L17 151 M54 166 L30 177" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>'
     : anim==="attack"||anim==="ultimate"
-    ? '<path d="M42 80 Q8 123 39 179 Q64 206 81 201" fill="none" stroke="#e8d6ae" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/><path d="M35 101 Q15 130 36 159" fill="none" stroke="#fff8e8" stroke-opacity=".8" stroke-width="2"/>'
+    ? '<path d="M42 80 Q28 123 39 179 Q64 206 81 201" fill="none" stroke="#e8d6ae" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/><path d="M35 101 Q28 130 36 159" fill="none" stroke="#fff8e8" stroke-opacity=".8" stroke-width="2"/>'
     : "";
-  const dead = anim==="death" ? `<g transform="translate(0 82) rotate(68 128 155)" opacity=".95">` : "<g>";
+  const dead = anim==="death" ? `<g transform="translate(0 ${Math.min(index*2,10)}) rotate(${Math.min(index*3,15)} 128 180)" opacity=".95">` : "<g>";
   const close = "</g>";
   return `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
   <defs>
@@ -50,7 +50,7 @@ function svgFrame(id, hero, anim, index, total) {
    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f0d7bc"/><stop offset="1" stop-color="#b9856c"/></linearGradient>
    <filter id="shadow" x="-30%" y="-20%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
   </defs>
-  <ellipse cx="128" cy="226" rx="47" ry="8" fill="#4d554d" opacity=".2" filter="url(#shadow)"/>
+  <ellipse cx="128" cy="226" rx="47" ry="6" fill="#4d554d" opacity=".2" filter="url(#shadow)"/>
   ${motion}
   ${dead}
    <g transform="translate(0 ${bob.toFixed(1)}) rotate(${lean.toFixed(1)} 128 145)" opacity="${alpha}">
