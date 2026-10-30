@@ -88,7 +88,7 @@ function svgFrame(id, hero, anim, index, total) {
    ${anim==="ultimate"?'<circle cx="128" cy="126" r="91" fill="none" stroke="#e8cb91" stroke-width="4" stroke-dasharray="18 12" opacity=".8"/><path d="M128 17 L136 38 L158 40 L141 54 L146 76 L128 64 L110 76 L115 54 L98 40 L120 38 Z" fill="#f0d8a4" opacity=".65"/>':""}
    ${anim==="hit"?'<path d="M179 67 L188 50 L195 69 L214 71 L198 82 L203 101 L187 89 L172 101 L177 82 L161 71 Z" fill="#f4dfbd" stroke="#a87965" stroke-width="2"/>':""}
   ${close}
-  <path d="M24 232 H232" stroke="#ffffff" stroke-opacity=".15" stroke-width="1"/>
+  <path d="M25 231 H231" stroke="#ffffff" stroke-opacity=".15" stroke-width="1"/>
  </svg>`;
 }
 async function main(){
