@@ -18,14 +18,14 @@ function svgFrame(id, hero, anim, index, total) {
   const lean=anim==="attack"?Math.sin(index/Math.max(1,total-1)*Math.PI)*12:anim==="ultimate"?Math.sin(phase)*9:0;
   const alpha=anim==="hit"&&index===1?0.8:1;
   const weapon = p.weapon==="halberd"
-    ? '<path d="M194 178 L214 29" stroke="#51464a" stroke-width="7" stroke-linecap="round"/><path d="M197 64 Q180 39 192 24 Q208 38 214 12 Q228 39 215 66 Z" fill="#d4b47f" stroke="#574a48" stroke-width="4"/><path d="M194 58 L218 47" stroke="#f0dfbd" stroke-width="3"/>'
+    ? '<path d="M194 178 L214 29" stroke="#51464a" stroke-width="7" stroke-linecap="round"/><path d="M197 64 Q180 39 192 24 Q208 38 214 28 Q228 39 215 66 Z" fill="#d4b47f" stroke="#574a48" stroke-width="4"/><path d="M194 58 L218 47" stroke="#f0dfbd" stroke-width="3"/>'
     : p.weapon==="spear"
     ? '<path d="M196 191 L211 30" stroke="#604e42" stroke-width="6" stroke-linecap="round"/><path d="M211 27 L225 58 L211 50 L198 58 Z" fill="#c7d0bd" stroke="#455c57" stroke-width="3"/><path d="M207 55 L216 55" stroke="#f0e4c9" stroke-width="3"/>'
     : p.weapon==="fan"
-    ? '<path d="M188 155 L214 93" stroke="#62554b" stroke-width="5"/><path d="M212 98 Q184 78 177 46 Q218 51 234 77 Q231 95 212 98 Z" fill="#d9d0bd" stroke="#59677b" stroke-width="3"/><path d="M212 97 L188 53 M212 97 L207 49 M212 97 L226 56" stroke="#9a8c75" stroke-width="2"/>'
+    ? '<path d="M188 155 L214 93" stroke="#62554b" stroke-width="5"/><path d="M212 98 Q184 78 177 46 Q218 51 228 77 Q227 95 212 98 Z" fill="#d9d0bd" stroke="#59677b" stroke-width="3"/><path d="M212 97 L188 53 M212 97 L207 49 M212 97 L224 56" stroke="#9a8c75" stroke-width="2"/>'
     : p.weapon==="guandao"
-    ? '<path d="M190 190 L216 34" stroke="#514a42" stroke-width="7"/><path d="M215 31 Q185 31 179 56 Q194 69 215 54 Q231 40 235 24 Q222 26 215 31 Z" fill="#c8a66f" stroke="#514a42" stroke-width="4"/><path d="M183 58 Q200 66 214 53" stroke="#eee0c0" stroke-width="3" fill="none"/>'
-    : '<path d="M193 176 L218 65" stroke="#594e42" stroke-width="5"/><path d="M212 76 Q232 47 224 25 Q231 42 229 70 Q224 88 208 91" fill="none" stroke="#b99c6c" stroke-width="5"/><path d="M210 82 Q226 59 229 43" stroke="#e4d1a8" stroke-width="2" fill="none"/>';
+    ? '<path d="M190 190 L216 34" stroke="#514a42" stroke-width="7"/><path d="M215 31 Q185 31 179 56 Q194 69 215 54 Q228 40 228 28 Q222 29 215 31 Z" fill="#c8a66f" stroke="#514a42" stroke-width="4"/><path d="M183 58 Q200 66 214 53" stroke="#eee0c0" stroke-width="3" fill="none"/>'
+    : '<path d="M193 176 L218 65" stroke="#594e42" stroke-width="5"/><path d="M212 76 Q228 47 224 28 Q228 42 226 70 Q224 88 208 91" fill="none" stroke="#b99c6c" stroke-width="5"/><path d="M210 82 Q226 59 229 43" stroke="#e4d1a8" stroke-width="2" fill="none"/>';
   const crest = p.crest==="wing"
     ? '<path d="M110 48 Q76 26 56 40 Q75 50 103 64 M143 48 Q180 26 200 40 Q179 51 150 64" fill="#a77b70" stroke="#4c4141" stroke-width="4"/>'
     : p.crest==="plume"
@@ -37,7 +37,7 @@ function svgFrame(id, hero, anim, index, total) {
     : '<path d="M91 48 Q91 27 128 26 Q165 27 165 48 L154 55 L102 55 Z" fill="#a58c5e" stroke="#4d473d" stroke-width="4"/><path d="M93 36 L163 36" stroke="#e5d2a8" stroke-width="4"/>';
   const cloak = hero==="lvbu" ? "#554958" : hero==="guanyu" ? "#7e4542" : p.cloth;
   const motion = anim==="run"
-    ? '<path d="M44 133 L22 125 M48 150 L17 151 M54 166 L30 177" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>'
+    ? '<path d="M44 133 L30 125 M48 150 L28 151 M54 166 L34 177" stroke="#ffffff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>'
     : anim==="attack"||anim==="ultimate"
     ? '<path d="M42 80 Q28 123 39 179 Q64 206 81 201" fill="none" stroke="#e8d6ae" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/><path d="M35 101 Q28 130 36 159" fill="none" stroke="#fff8e8" stroke-opacity=".8" stroke-width="2"/>'
     : "";
@@ -73,7 +73,7 @@ function svgFrame(id, hero, anim, index, total) {
     <path d="M98 103 Q91 86 105 77 L119 83 L115 111 Z M157 103 Q166 85 151 77 L137 83 L141 111 Z" fill="url(#metal)" stroke="${p.dark}" stroke-width="4"/>
     <path d="M112 74 L112 60 L145 60 L145 77" fill="url(#skin)" stroke="${p.dark}" stroke-width="3"/>
     <ellipse cx="128" cy="63" rx="26" ry="31" fill="url(#skin)" stroke="${p.dark}" stroke-width="4"/>
-    <path d="M102 57 Q99 24 128 23 Q158 23 155 59 L146 45 Q129 53 110 43 Z" fill="${p.dark}" stroke="#302f30" stroke-width="4"/>
+    <path d="M102 57 Q99 28 128 27 Q158 27 155 59 L146 45 Q129 53 110 43 Z" fill="${p.dark}" stroke="#302f30" stroke-width="4"/>
     ${crest}
     <path d="M109 64 Q116 60 121 64 M135 64 Q141 60 147 64" stroke="#4b3934" stroke-width="3" fill="none" stroke-linecap="round"/>
     <ellipse cx="117" cy="70" rx="3" ry="2" fill="#342f2d"/><ellipse cx="139" cy="70" rx="3" ry="2" fill="#342f2d"/>
