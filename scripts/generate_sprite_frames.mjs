@@ -99,11 +99,11 @@ const enemyPalettes = {
 function enemySvg(kind){
  const p=enemyPalettes[kind];
  const weapon=kind==="boss"
-  ? '<path d="M188 187 L217 29" stroke="#514743" stroke-width="8"/><path d="M194 62 Q177 39 194 26 Q211 37 220 16 Q234 42 215 69 Z" fill="#c9a66e" stroke="#40383a" stroke-width="4"/>'
+  ? '<path d="M188 187 L217 29" stroke="#514743" stroke-width="8"/><path d="M194 62 Q177 39 194 26 Q211 37 220 28 Q228 42 215 69 Z" fill="#c9a66e" stroke="#40383a" stroke-width="4"/>'
   : kind==="elite"
-  ? '<path d="M190 183 L218 34" stroke="#55483e" stroke-width="6"/><path d="M218 27 L231 60 L216 51 L202 60 Z" fill="#d8c294" stroke="#51463e" stroke-width="3"/>'
+  ? '<path d="M190 183 L218 34" stroke="#55483e" stroke-width="6"/><path d="M218 28 L228 60 L216 51 L202 60 Z" fill="#d8c294" stroke="#51463e" stroke-width="3"/>'
   : '<path d="M187 181 L214 45" stroke="#554b43" stroke-width="6"/><path d="M214 37 L226 66 L214 58 L202 66 Z" fill="#c5b18b" stroke="#51463e" stroke-width="3"/>';
- const horns=kind==="boss"?'<path d="M104 48 L77 26 L91 62 M151 48 L179 26 L164 62" fill="#a68b65" stroke="#38363a" stroke-width="5"/>':"";
+ const horns=kind==="boss"?'<path d="M104 48 L77 28 L91 62 M151 48 L179 28 L164 62" fill="#a68b65" stroke="#38363a" stroke-width="5"/>':"";
  const shield=kind==="grunt"?'<path d="M77 123 Q54 119 50 149 L61 190 L83 181 L91 145 Z" fill="#718274" stroke="#454344" stroke-width="4"/><path d="M58 145 L82 160 M69 132 L73 179" stroke="#d1c09d" stroke-width="3"/>':'';
  return `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
  <defs><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p.light}"/><stop offset=".55" stop-color="${p.armor}"/><stop offset="1" stop-color="${p.dark}"/></linearGradient><linearGradient id="m"><stop stop-color="#f1dfb9"/><stop offset="1" stop-color="${p.metal}"/></linearGradient></defs>
