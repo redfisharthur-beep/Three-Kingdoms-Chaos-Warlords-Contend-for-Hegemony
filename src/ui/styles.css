@@ -42,3 +42,45 @@
 .home-copy h1{letter-spacing:.13em;text-shadow:0 8px 26px #39433d18}
 .mode-card{background:#ffffff82}
 @media(max-width:650px){.battle-top{background:#171e20f5}.timer{font-size:13px}.boss-hp{width:22vw}.player-status{min-width:78px}}
+
+/* Chibi Three Kingdoms reference pass */
+:root{--paper:#211b1a;--ink:#f7e8c8;--muted:#c5b398;--sage:#bc623c;--sage-deep:#853925}
+.home{max-width:none;padding:clamp(18px,3vw,42px);background:radial-gradient(ellipse at 78% 40%,#763b2c 0,transparent 42%),linear-gradient(135deg,#191b20 0%,#38251f 55%,#171a1e 100%);color:#f8e8c8}
+.home:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#100f12cc 0%,transparent 58%),repeating-linear-gradient(135deg,#fff0 0 22px,#ffffff05 23px 24px)}
+.home-top,.home-copy,.hero-select,.home-bottom{position:relative;z-index:1}
+.brand-mark{color:#e9c98f;text-shadow:0 2px 8px #000}
+.home-copy h1{color:#f6d99e;text-shadow:3px 4px 0 #633024,0 8px 24px #000;letter-spacing:.08em;font-weight:900}
+.hero-select{gap:clamp(20px,5vw,76px)}
+.hero-art{border:4px solid #d5aa66;border-radius:22px;background:radial-gradient(circle at 50% 35%,#aa593c,#412a27 70%,#181b20);box-shadow:0 12px 0 #171315,0 22px 50px #0009,inset 0 0 0 4px #553328}
+.art-halo{border:2px solid #f2d49a;box-shadow:0 0 0 12px #e8b66b25,0 0 35px #f5b75c55}
+.hero-portrait{filter:drop-shadow(0 9px 0 #241815) drop-shadow(0 10px 12px #000)}
+.hero-info h2{color:#ffe0a5;text-shadow:2px 2px #713d2b}
+.hero-info p,.stat-pills span{color:#dfc9a9}
+.stat-pills span{background:#3b2925;border:1px solid #a77c50;border-radius:8px}
+.hero-dot{border-color:#f5dfb4;box-shadow:0 2px 6px #000}
+.ultimate-preview{border-color:#9d6847}.ultimate-icon{background:#a8442f;color:#ffe2aa;border:1px solid #dbab6a}
+.mode-card{background:linear-gradient(135deg,#47332a,#29252a);border:1px solid #ad8253;border-radius:9px;color:#f5e2c3;box-shadow:0 5px 14px #0005}
+.mode-card small,.fullscreen-note{color:#cbb392}
+.primary-button{border:2px solid #ffd47e;border-radius:9px;background:linear-gradient(180deg,#d65b32,#8e261d);box-shadow:0 5px 0 #4b1b18,0 12px 24px #0007;color:#fff0ce;text-shadow:0 2px #682019}
+.primary-button:active{background:#a63b28}
+.battle-screen{background:#1a1918;color:#fff0d2}
+.battle-top{background:linear-gradient(180deg,#17171af5,#34231ef2);border-bottom:2px solid #b77e4d;color:#fff0d2}
+.avatar-mini{background:linear-gradient(145deg,#d59b47,#8e3a2b);border:2px solid #f7d28a}
+.player-status b{color:#ffe6b6}.player-status small,.bar-label,.exp-row{color:#d5bb97}
+.pause-btn{background:#442a22;border:1px solid #d4a66a;color:#ffe7bd}
+.boss-hp{color:#ffd08a}.boss-hp div{background:#160f10;border:1px solid #bd8852}.boss-hp i{background:linear-gradient(90deg,#8e1f1c,#f0a34b)}
+.battle-bottom{background:linear-gradient(0deg,#17171bf9,#2e211de8 76%,#2e211d00)}
+.ultimate-button{background:linear-gradient(145deg,#e09c3c,#9b3024);border:3px solid #ffe2a2;box-shadow:0 0 0 4px #1a1512,0 8px 25px #000a}
+.ultimate-button.ready{background:linear-gradient(145deg,#ffd56d,#d24727);box-shadow:0 0 0 5px #ffc15a44,0 0 36px #ff7a36}
+.overlay{background:#150f0ddc;backdrop-filter:blur(7px)}
+.choice-panel,.result-panel{background:linear-gradient(145deg,#56372a,#241e20);border:2px solid #d3a15b;border-radius:14px;box-shadow:0 0 0 5px #251813,0 22px 70px #000d;color:#ffe9c7}
+.choice-panel h2,.result-panel h2{color:#ffda91;text-shadow:2px 2px #7d3024}
+.choice-panel>p,.result-panel>p{color:#e3c9a5}
+.skill-card{background:linear-gradient(145deg,#4b3028,#282126);border:2px solid #a5784d;border-radius:12px;color:#ffedcf;box-shadow:inset 0 0 18px #0005}
+.skill-card:hover,.skill-card:focus-visible{outline:2px solid #ffd079}
+.skill-icon{background:#a23b2b55;color:#ffd58e;border-radius:10px}
+.skill-card small{color:#e2c7a5}
+.skill-card.rare{border-color:#7196bd}.skill-card.epic{border-color:#c18bd7}
+.result-stats div{background:#291e1c;border:1px solid #a87a4c}
+.result-stats b{color:#ffd18b}.result-stats small{color:#d5b895}
+.battle-screen canvas{filter:contrast(1.12) saturate(1.18)}
