@@ -1,18 +1,16 @@
 import Phaser from "phaser";
 import { HERO_BY_ID, type HeroId } from "../data/heroes";
 import { BASE_STATS, rollSkills, type RunStats, type Skill } from "../data/skills";
-type Enemy={body:Phaser.GameObjects.Arc;hp:number;speed:number;attack:number;kind:"grunt"|"elite"|"boss";cooldown:number;phase:number};
+type Enemy={body:Phaser.GameObjects.Arc;hp:number;speed:number;attack:number;kind:"grunt"|"elite"|"boss";cooldown:number};
 type Projectile={body:Phaser.GameObjects.Arc;vx:number;vy:number;damage:number;life:number};
 export type CombatEvents={onHud:(v:{hp:number;maxHp:number;level:number;exp:number;expNext:number;time:number;bossHp?:number;bossMax?:number;ultimate:number})=>void;onLevelUp:(skills:Skill[])=>void;onEnd:(won:boolean,kills:number,time:number)=>void;onUltimateReady:(ready:boolean)=>void};
 export class CombatScene extends Phaser.Scene{
-  heroId:HeroId="lvbu"; events!:CombatEvents; hp=100; maxHp=100; level=1; exp=0; expNext=20; elapsed=0; kills=0; stats:RunStats={...BASE_STATS}; enemies:Enemy[]=[]; projectiles:Projectile[]=[]; player!:Phaser.GameObjects.Container; playerCore!:Phaser.GameObjects.Arc; cursors!:Phaser.Types.Input.Keyboard.CursorKeys; keys!:Record<string,Phaser.Input.Keyboard.Key>; move={x:0,y:0}; joystickCenter:{x:number;y:number}|null=null; ultimateCharge=0; lastShot=0; lastSpawn=0; pausedForChoice=false; bossSpawned=false; boss:Enemy|null=null; lastHud=0;
+  heroId:HeroId="lvbu"; events!:CombatEvents; hp=100; maxHp=100; level=1; exp=0; expNext=20; elapsed=0; kills=0; stats:RunStats={...BASE_STATS}; enemies:Enemy[]=[]; projectiles:Projectile[]=[]; player!:Phaser.GameObjects.Arc; cursors!:Phaser.Types.Input.Keyboard.CursorKeys; keys!:Record<string,Phaser.Input.Keyboard.Key>; move={x:0,y:0}; joystickCenter:{x:number;y:number}|null=null; ultimateCharge=0; lastShot=0; lastSpawn=0; pausedForChoice=false; bossSpawned=false; boss:Enemy|null=null; lastHud=0;
   constructor(){super("combat");}
   init(data:{heroId?:HeroId;events:CombatEvents}){this.heroId=data.heroId??"lvbu";this.events=data.events;}
   create(){
     const hero=HERO_BY_ID[this.heroId];this.hp=hero.hp;this.maxHp=hero.hp;this.cameras.main.setBackgroundColor("#e9e7e1");
-    this.add.tileSprite(0,0,2400,1600,"").setOrigin(0); // background is drawn with vector shapes below
-    this.drawArena();this.playerCore=this.add.circle(0,0,15,hero.color).setStrokeStyle(3,0xf8f4ec);
-    const aura=this.add.circle(0,0,25,hero.color,0.12);this.player=this.add.container(600,400,[aura,this.playerCore]);this.physics.world.setBounds(18,18,1164,764);this.physics.add.existing(this.player);const body=this.player.body as Phaser.Physics.Arcade.Body;body.setCircle(17);body.setCollideWorldBounds(true);
+    this.drawArena();this.player=this.add.circle(600,400,16,hero.color).setStrokeStyle(3,0xf8f4ec);this.physics.add.existing(this.player);const body=this.player.body as Phaser.Physics.Arcade.Body;body.setCircle(15);body.setCollideWorldBounds(true);this.physics.world.setBounds(18,18,1164,764);
     this.cameras.main.startFollow(this.player,true,0.08,0.08);this.cameras.main.setBounds(0,0,1200,800);
     this.cursors=this.input.keyboard!.createCursorKeys();this.keys=this.input.keyboard!.addKeys("W,A,S,D,SPACE") as Record<string,Phaser.Input.Keyboard.Key>;
     this.time.addEvent({delay:1000,loop:true,callback:()=>{if(!this.pausedForChoice){this.elapsed++;if(this.elapsed>=480)this.finish(true);if(this.elapsed>=65&&!this.bossSpawned)this.spawnBoss();}}});
@@ -20,7 +18,7 @@ export class CombatScene extends Phaser.Scene{
   }
   drawArena(){const g=this.add.graphics();g.fillStyle(0xe9e7e1,1);g.fillRect(0,0,1200,800);g.lineStyle(1,0xd6d4ca,.6);for(let x=0;x<1200;x+=64)for(let y=0;y<800;y+=64)g.strokeRect(x,y,64,64);for(let i=0;i<34;i++){const x=Phaser.Math.Between(35,1165),y=Phaser.Math.Between(35,765);g.fillStyle(i%2?0xb7c1ad:0xc4b9aa,.38);g.fillCircle(x,y,Phaser.Math.Between(3,8));}}
   setMove(x:number,y:number){this.move={x:Phaser.Math.Clamp(x,-1,1),y:Phaser.Math.Clamp(y,-1,1)};}
-  applySkill(skill:Skill){this.stats=skill.apply(this.stats);if(skill.id==="vital"){this.maxHp=Math.round(this.maxHp*1.2);this.hp=Math.min(this.maxHp,this.hp+20);}this.pausedForChoice=false;this.physics.world.resume();this.time.paused=false;}
+  applySkill(skill:Skill){this.stats=skill.apply(this.stats);if(skill.id==="vital"){this.maxHp=Math.round(this.maxHp*1.2);this.hp=Math.min(this.maxHp,this.hp+20);}this.pausedForChoice=false;this.scene.resume();this.physics.world.resume();}
   useUltimate(){if(this.ultimateCharge<100||this.pausedForChoice)return;this.ultimateCharge=0;const hero=HERO_BY_ID[this.heroId];const px=this.player.x,py=this.player.y;
     if(this.heroId==="zhaoyun"){const dir=this.move.x||this.move.y?new Phaser.Math.Vector2(this.move.x,this.move.y).normalize():new Phaser.Math.Vector2(1,0);this.player.setPosition(Phaser.Math.Clamp(px+dir.x*210,20,1180),Phaser.Math.Clamp(py+dir.y*210,20,780));this.damageRadius(this.player.x,this.player.y,100,2.5);}
     else if(this.heroId==="zhugeliang"){this.damageRadius(px,py,290,3.1);this.add.circle(px,py,290,0xd3a66d,.2).setDepth(3);}
@@ -31,7 +29,7 @@ export class CombatScene extends Phaser.Scene{
   damageRadius(x:number,y:number,r:number,m:number){this.enemies.forEach(e=>{if(e.hp>0&&Phaser.Math.Distance.Between(x,y,e.body.x,e.body.y)<r){e.hp-=HERO_BY_ID[this.heroId].damage*m*this.stats.damage;this.drawHit(e.body.x,e.body.y);}});}
   drawHit(x:number,y:number){const p=this.add.circle(x,y,8,0xc18b74,.8);this.tweens.add({targets:p,alpha:0,scale:2,duration:240,onComplete:()=>p.destroy()});}
   spawnWave(n:number){for(let i=0;i<n;i++)this.spawnEnemy("grunt");}
-  spawnEnemy(kind:"grunt"|"elite"|"boss"){const a=Math.random()*Math.PI*2,d=kind==="boss"?390:Phaser.Math.Between(270,460),x=Phaser.Math.Clamp(this.player.x+Math.cos(a)*d,24,1176),y=Phaser.Math.Clamp(this.player.y+Math.sin(a)*d,24,776),boss=kind==="boss",e:Enemy={body:this.add.circle(x,y,boss?34:kind==="elite"?17:12,boss?0x9b6f68:kind==="elite"?0xb28d61:0x7f8e79).setStrokeStyle(2,0xf4eee5),hp:boss?950:kind==="elite"?95:32,speed:boss?55:kind==="elite"?78:94,attack:boss?20:kind==="elite"?12:7,kind,cooldown:Phaser.Math.Between(900,1800),phase:0};this.enemies.push(e);if(boss)this.boss=e;}
+  spawnEnemy(kind:"grunt"|"elite"|"boss"){const a=Math.random()*Math.PI*2,d=kind==="boss"?390:Phaser.Math.Between(270,460),x=Phaser.Math.Clamp(this.player.x+Math.cos(a)*d,24,1176),y=Phaser.Math.Clamp(this.player.y+Math.sin(a)*d,24,776),boss=kind==="boss",e:Enemy={body:this.add.circle(x,y,boss?34:kind==="elite"?17:12,boss?0x9b6f68:kind==="elite"?0xb28d61:0x7f8e79).setStrokeStyle(2,0xf4eee5),hp:boss?950:kind==="elite"?95:32,speed:boss?55:kind==="elite"?78:94,attack:boss?20:kind==="elite"?12:7,kind,cooldown:Phaser.Math.Between(900,1800)};this.enemies.push(e);if(boss)this.boss=e;}
   spawnBoss(){this.bossSpawned=true;this.spawnEnemy("boss");}
   fireAtPlayer(e:Enemy){const v=new Phaser.Math.Vector2(this.player.x-e.body.x,this.player.y-e.body.y).normalize();const p=this.add.circle(e.body.x,e.body.y,e.kind==="boss"?9:5,e.kind==="boss"?0xb77d78:0x9a9eaa);this.projectiles.push({body:p,vx:v.x*(e.kind==="boss"?210:175),vy:v.y*(e.kind==="boss"?210:175),damage:e.attack,life:4});}
   update(_t:number,dt:number){if(this.pausedForChoice)return;const delta=Math.min(dt,40)/1000,hero=HERO_BY_ID[this.heroId],body=this.player.body as Phaser.Physics.Arcade.Body;
