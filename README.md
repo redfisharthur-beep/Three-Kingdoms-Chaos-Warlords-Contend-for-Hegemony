@@ -37,7 +37,7 @@ npm run build     # sprite generation is included automatically
 
 ## Art pipeline
 See [src/assets/README.md](src/assets/README.md) and `src/game/assets/animationManifest.ts`.
-The build generates 205 transparent SVG frames as separate image files plus five portraits. Every frame is 256x256, keeps at least 24px of safe padding, and uses a fixed bottom-center foot anchor. No trimming or tight sprite-sheet slicing is used, so weapons, hair, capes and motion silhouettes retain breathing room.
+The build generates 205 transparent SVG animation frames, five hero portraits and three distinct enemy illustrations as separate image files. Every frame is 256x256, keeps at least 24px of safe padding, and uses a fixed bottom-center foot anchor. No trimming or tight sprite-sheet slicing is used, so weapons, hair, capes and motion silhouettes retain breathing room.
 
 ## Important scope note
 This is a playable frontend prototype, not yet the complete online game. Multiplayer matchmaking, authoritative server simulation, accounts, inventory persistence, gacha, loot chests and real reward delivery are not implemented yet. The current combat timings and balancing are initial test values.
