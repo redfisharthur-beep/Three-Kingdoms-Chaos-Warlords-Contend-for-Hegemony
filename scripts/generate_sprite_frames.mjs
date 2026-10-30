@@ -29,7 +29,7 @@ function svgFrame(id, hero, anim, index, total) {
   const crest = p.crest==="wing"
     ? '<path d="M110 48 Q76 26 56 40 Q75 50 103 64 M143 48 Q180 26 200 40 Q179 51 150 64" fill="#a77b70" stroke="#4c4141" stroke-width="4"/>'
     : p.crest==="plume"
-    ? '<path d="M125 49 Q109 27 131 25 Q146 34 139 49" fill="#d4d8c7" stroke="#425c57" stroke-width="3"/>'
+    ? '<path d="M125 49 Q109 29 131 27 Q146 36 139 49" fill="#d4d8c7" stroke="#425c57" stroke-width="3"/>'
     : p.crest==="cap"
     ? '<path d="M92 48 Q93 27 128 26 Q164 27 165 48 L151 56 L104 56 Z" fill="#46556a" stroke="#d1c6aa" stroke-width="4"/><path d="M90 46 Q128 34 166 46" stroke="#c8b58f" stroke-width="5"/>'
     : p.crest==="crown"
@@ -41,7 +41,7 @@ function svgFrame(id, hero, anim, index, total) {
     : anim==="attack"||anim==="ultimate"
     ? '<path d="M42 80 Q28 123 39 179 Q64 206 81 201" fill="none" stroke="#e8d6ae" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/><path d="M35 101 Q28 130 36 159" fill="none" stroke="#fff8e8" stroke-opacity=".8" stroke-width="2"/>'
     : "";
-  const dead = anim==="death" ? `<g transform="translate(0 ${Math.min(index*2,10)}) rotate(${Math.min(index*3,15)} 128 180)" opacity=".95">` : "<g>";
+  const dead = anim==="death" ? `<g transform="translate(128 226) scale(${(1-index*0.01).toFixed(2)}) translate(-128 -226)" opacity=".95">` : "<g>";
   const close = "</g>";
   return `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
   <defs>
