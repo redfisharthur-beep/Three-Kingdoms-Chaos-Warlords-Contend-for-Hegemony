@@ -1,0 +1,52 @@
+import Phaser from "phaser";
+import { HERO_BY_ID, type HeroId } from "../data/heroes";
+import { BASE_STATS, rollSkills, type RunStats, type Skill } from "../data/skills";
+type Enemy={body:Phaser.GameObjects.Arc;hp:number;speed:number;attack:number;kind:"grunt"|"elite"|"boss";cooldown:number;phase:number};
+type Projectile={body:Phaser.GameObjects.Arc;vx:number;vy:number;damage:number;life:number};
+export type CombatEvents={onHud:(v:{hp:number;maxHp:number;level:number;exp:number;expNext:number;time:number;bossHp?:number;bossMax?:number;ultimate:number})=>void;onLevelUp:(skills:Skill[])=>void;onEnd:(won:boolean,kills:number,time:number)=>void;onUltimateReady:(ready:boolean)=>void};
+export class CombatScene extends Phaser.Scene{
+  heroId:HeroId="lvbu"; events!:CombatEvents; hp=100; maxHp=100; level=1; exp=0; expNext=20; elapsed=0; kills=0; stats:RunStats={...BASE_STATS}; enemies:Enemy[]=[]; projectiles:Projectile[]=[]; player!:Phaser.GameObjects.Container; playerCore!:Phaser.GameObjects.Arc; cursors!:Phaser.Types.Input.Keyboard.CursorKeys; keys!:Record<string,Phaser.Input.Keyboard.Key>; move={x:0,y:0}; joystickCenter:{x:number;y:number}|null=null; ultimateCharge=0; lastShot=0; lastSpawn=0; pausedForChoice=false; bossSpawned=false; boss:Enemy|null=null; lastHud=0;
+  constructor(){super("combat");}
+  init(data:{heroId?:HeroId;events:CombatEvents}){this.heroId=data.heroId??"lvbu";this.events=data.events;}
+  create(){
+    const hero=HERO_BY_ID[this.heroId];this.hp=hero.hp;this.maxHp=hero.hp;this.cameras.main.setBackgroundColor("#e9e7e1");
+    this.add.tileSprite(0,0,2400,1600,"").setOrigin(0); // background is drawn with vector shapes below
+    this.drawArena();this.playerCore=this.add.circle(0,0,15,hero.color).setStrokeStyle(3,0xf8f4ec);
+    const aura=this.add.circle(0,0,25,hero.color,0.12);this.player=this.add.container(600,400,[aura,this.playerCore]);this.physics.world.setBounds(18,18,1164,764);this.physics.add.existing(this.player);const body=this.player.body as Phaser.Physics.Arcade.Body;body.setCircle(17);body.setCollideWorldBounds(true);
+    this.cameras.main.startFollow(this.player,true,0.08,0.08);this.cameras.main.setBounds(0,0,1200,800);
+    this.cursors=this.input.keyboard!.createCursorKeys();this.keys=this.input.keyboard!.addKeys("W,A,S,D,SPACE") as Record<string,Phaser.Input.Keyboard.Key>;
+    this.time.addEvent({delay:1000,loop:true,callback:()=>{if(!this.pausedForChoice){this.elapsed++;if(this.elapsed>=480)this.finish(true);if(this.elapsed>=65&&!this.bossSpawned)this.spawnBoss();}}});
+    this.spawnWave(8);this.events.onUltimateReady(false);
+  }
+  drawArena(){const g=this.add.graphics();g.fillStyle(0xe9e7e1,1);g.fillRect(0,0,1200,800);g.lineStyle(1,0xd6d4ca,.6);for(let x=0;x<1200;x+=64)for(let y=0;y<800;y+=64)g.strokeRect(x,y,64,64);for(let i=0;i<34;i++){const x=Phaser.Math.Between(35,1165),y=Phaser.Math.Between(35,765);g.fillStyle(i%2?0xb7c1ad:0xc4b9aa,.38);g.fillCircle(x,y,Phaser.Math.Between(3,8));}}
+  setMove(x:number,y:number){this.move={x:Phaser.Math.Clamp(x,-1,1),y:Phaser.Math.Clamp(y,-1,1)};}
+  applySkill(skill:Skill){this.stats=skill.apply(this.stats);if(skill.id==="vital"){this.maxHp=Math.round(this.maxHp*1.2);this.hp=Math.min(this.maxHp,this.hp+20);}this.pausedForChoice=false;this.physics.world.resume();this.time.paused=false;}
+  useUltimate(){if(this.ultimateCharge<100||this.pausedForChoice)return;this.ultimateCharge=0;const hero=HERO_BY_ID[this.heroId];const px=this.player.x,py=this.player.y;
+    if(this.heroId==="zhaoyun"){const dir=this.move.x||this.move.y?new Phaser.Math.Vector2(this.move.x,this.move.y).normalize():new Phaser.Math.Vector2(1,0);this.player.setPosition(Phaser.Math.Clamp(px+dir.x*210,20,1180),Phaser.Math.Clamp(py+dir.y*210,20,780));this.damageRadius(this.player.x,this.player.y,100,2.5);}
+    else if(this.heroId==="zhugeliang"){this.damageRadius(px,py,290,3.1);this.add.circle(px,py,290,0xd3a66d,.2).setDepth(3);}
+    else if(this.heroId==="huangzhong"){const targets=this.enemies.filter(e=>e.hp>0).sort((a,b)=>Phaser.Math.Distance.Between(px,py,a.body.x,a.body.y)-Phaser.Math.Distance.Between(px,py,b.body.x,b.body.y)).slice(0,5);targets.forEach(e=>{e.hp-=hero.damage*5;this.drawHit(e.body.x,e.body.y);});}
+    else {this.damageRadius(px,py,hero.range*2.2,3.5);this.add.circle(px,py,hero.range*2.2,hero.color,.17).setDepth(3);}
+    this.events.onUltimateReady(false);
+  }
+  damageRadius(x:number,y:number,r:number,m:number){this.enemies.forEach(e=>{if(e.hp>0&&Phaser.Math.Distance.Between(x,y,e.body.x,e.body.y)<r){e.hp-=HERO_BY_ID[this.heroId].damage*m*this.stats.damage;this.drawHit(e.body.x,e.body.y);}});}
+  drawHit(x:number,y:number){const p=this.add.circle(x,y,8,0xc18b74,.8);this.tweens.add({targets:p,alpha:0,scale:2,duration:240,onComplete:()=>p.destroy()});}
+  spawnWave(n:number){for(let i=0;i<n;i++)this.spawnEnemy("grunt");}
+  spawnEnemy(kind:"grunt"|"elite"|"boss"){const a=Math.random()*Math.PI*2,d=kind==="boss"?390:Phaser.Math.Between(270,460),x=Phaser.Math.Clamp(this.player.x+Math.cos(a)*d,24,1176),y=Phaser.Math.Clamp(this.player.y+Math.sin(a)*d,24,776),boss=kind==="boss",e:Enemy={body:this.add.circle(x,y,boss?34:kind==="elite"?17:12,boss?0x9b6f68:kind==="elite"?0xb28d61:0x7f8e79).setStrokeStyle(2,0xf4eee5),hp:boss?950:kind==="elite"?95:32,speed:boss?55:kind==="elite"?78:94,attack:boss?20:kind==="elite"?12:7,kind,cooldown:Phaser.Math.Between(900,1800),phase:0};this.enemies.push(e);if(boss)this.boss=e;}
+  spawnBoss(){this.bossSpawned=true;this.spawnEnemy("boss");}
+  fireAtPlayer(e:Enemy){const v=new Phaser.Math.Vector2(this.player.x-e.body.x,this.player.y-e.body.y).normalize();const p=this.add.circle(e.body.x,e.body.y,e.kind==="boss"?9:5,e.kind==="boss"?0xb77d78:0x9a9eaa);this.projectiles.push({body:p,vx:v.x*(e.kind==="boss"?210:175),vy:v.y*(e.kind==="boss"?210:175),damage:e.attack,life:4});}
+  update(_t:number,dt:number){if(this.pausedForChoice)return;const delta=Math.min(dt,40)/1000,hero=HERO_BY_ID[this.heroId],body=this.player.body as Phaser.Physics.Arcade.Body;
+    let kx=0,ky=0;if(this.cursors.left.isDown||this.keys.A.isDown)kx--;if(this.cursors.right.isDown||this.keys.D.isDown)kx++;if(this.cursors.up.isDown||this.keys.W.isDown)ky--;if(this.cursors.down.isDown||this.keys.S.isDown)ky++;if(kx||ky)this.setMove(kx,ky);
+    body.setVelocity(this.move.x*hero.speed*this.stats.moveSpeed,this.move.y*hero.speed*this.stats.moveSpeed);
+    this.enemies.forEach(e=>{if(e.hp<=0)return;const dx=this.player.x-e.body.x,dy=this.player.y-e.body.y,dist=Math.max(1,Math.hypot(dx,dy));e.body.x+=dx/dist*e.speed*delta;e.body.y+=dy/dist*e.speed*delta;e.cooldown-=dt;if(e.cooldown<=0){this.fireAtPlayer(e);e.cooldown=e.kind==="boss"?1050:1900;}if(dist<24){this.hp-=e.attack*delta*.65;}}); 
+    this.projectiles=this.projectiles.filter(p=>{p.body.x+=p.vx*delta;p.body.y+=p.vy*delta;p.life-=delta;if(Phaser.Math.Distance.Between(p.body.x,p.body.y,this.player.x,this.player.y)<23){this.hp-=p.damage;p.body.destroy();return false;}if(p.life<=0){p.body.destroy();return false;}return true;});
+    if(this.elapsed-this.lastSpawn>=3&&this.enemies.filter(e=>e.hp>0&&e.kind!=="boss").length<18){this.spawnEnemy(Math.random()<.12?"elite":"grunt");this.lastSpawn=this.elapsed;}
+    if(this.elapsed-this.lastShot>1000/(hero.attackRate*this.stats.attackRate)){this.autoAttack();this.lastShot=this.elapsed;}
+    if(this.boss&&this.boss.hp<=0){this.boss.body.destroy();this.boss=null;this.finish(true);}
+    this.enemies=this.enemies.filter(e=>{if(e.hp<=0){e.body.destroy();this.kills++;this.gainExp(e.kind==="boss"?25:e.kind==="elite"?8:3);this.ultimateCharge=Math.min(100,this.ultimateCharge+(e.kind==="boss"?35:e.kind==="elite"?7:2));return false;}return true;});
+    if(this.ultimateCharge>=100)this.events.onUltimateReady(true);if(this.hp<=0)this.finish(false);
+    if(this.time.now-this.lastHud>100){this.events.onHud({hp:Math.max(0,this.hp),maxHp:this.maxHp,level:this.level,exp:this.exp,expNext:this.expNext,time:this.elapsed,bossHp:this.boss?.hp,bossMax:this.boss?950:undefined,ultimate:this.ultimateCharge});this.lastHud=this.time.now;}
+  }
+  autoAttack(){const hero=HERO_BY_ID[this.heroId],target=this.enemies.filter(e=>e.hp>0).sort((a,b)=>Phaser.Math.Distance.Between(this.player.x,this.player.y,a.body.x,a.body.y)-Phaser.Math.Distance.Between(this.player.x,this.player.y,b.body.x,b.body.y))[0];if(!target)return;const distance=Phaser.Math.Distance.Between(this.player.x,this.player.y,target.body.x,target.body.y);if(distance>hero.range)return;target.hp-=hero.damage*this.stats.damage;if(this.heroId==="zhugeliang"||this.heroId==="huangzhong"||this.heroId==="guanyu"){const p=this.add.circle(this.player.x,this.player.y,4,hero.color);this.tweens.add({targets:p,x:target.body.x,y:target.body.y, duration:180,onComplete:()=>p.destroy()});}else this.drawHit(target.body.x,target.body.y);}
+  gainExp(n:number){this.exp+=n;if(this.exp>=this.expNext){this.exp-=this.expNext;this.level++;this.expNext=Math.round(this.expNext*1.38);this.pausedForChoice=true;this.physics.world.pause();this.events.onLevelUp(rollSkills());}}
+  finish(won:boolean){this.scene.pause();this.events.onEnd(won,this.kills,this.elapsed);}
+}
