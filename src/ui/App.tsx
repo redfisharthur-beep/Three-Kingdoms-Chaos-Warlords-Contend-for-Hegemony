@@ -5,7 +5,7 @@ import { CombatScene, type CombatEvents } from "../game/scenes/CombatScene";
 import type { Skill } from "../game/data/skills";
 type Hud={hp:number;maxHp:number;level:number;exp:number;expNext:number;time:number;bossHp?:number;bossMax?:number;ultimate:number};
 export default function App(){
- const host=useRef<HTMLDivElement>(null), game=useRef<Phaser.Game|null>(null), movePointer=useRef<number|null>(null), ultPointer=useRef<number|null>(null), moveOrigin=useRef<{x:number;y:number}|null>(null);
+ const host=useRef<HTMLDivElement>(null), game=useRef<Phaser.Game|null>(null), movePointer=useRef<number|null>(null), moveOrigin=useRef<{x:number;y:number}|null>(null);
  const [hero,setHero]=useState<HeroId>("lvbu"),[screen,setScreen]=useState<"home"|"combat"|"level"|"result">("home"),[hud,setHud]=useState<Hud>({hp:100,maxHp:100,level:1,exp:0,expNext:20,time:0,ultimate:0}),[skills,setSkills]=useState<Skill[]>([]),[ready,setReady]=useState(false),[won,setWon]=useState(false),[summary,setSummary]=useState({kills:0,time:0}),[joystick,setJoystick]=useState<{x:number;y:number;dx:number;dy:number}|null>(null),[fullscreenHint,setFullscreenHint]=useState(false);
  const selected=HEROES.find(h=>h.id===hero)!;
  useEffect(()=>()=>{game.current?.destroy(true);game.current=null;},[]);
