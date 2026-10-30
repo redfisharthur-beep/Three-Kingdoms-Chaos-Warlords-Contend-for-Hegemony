@@ -93,6 +93,12 @@ function svgFrame(id, hero, anim, index, total) {
 }
 const enemyPalettes = {
  grunt:{armor:"#8b716b",light:"#d7c2a5",dark:"#454344",cloth:"#718274",metal:"#b9a17b",weapon:"#9a8c78"},
+ archer:{armor:"#657f91",light:"#d8d0b9",dark:"#343b49",cloth:"#526d83",metal:"#b8b9a8",weapon:"#9b805e"},
+ cavalry:{armor:"#9a594b",light:"#e0c49b",dark:"#493536",cloth:"#74453f",metal:"#d0a86c",weapon:"#6a4a3c"},
+ shield:{armor:"#687c73",light:"#d5c7a9",dark:"#343c3a",cloth:"#53675e",metal:"#b7a783",weapon:"#746c5b"},
+ spearman:{armor:"#9a815c",light:"#e0cfad",dark:"#454038",cloth:"#8a7659",metal:"#c5ad7d",weapon:"#69543f"},
+ bomber:{armor:"#8e5848",light:"#e1b58b",dark:"#493632",cloth:"#754b42",metal:"#c38a5e",weapon:"#5b4138"},
+ healer:{armor:"#777b9a",light:"#e4d9c1",dark:"#3d4057",cloth:"#666b91",metal:"#c5b58b",weapon:"#8b7b9d"},
  elite:{armor:"#9a7a4f",light:"#e1c99a",dark:"#413c37",cloth:"#6b6f66",metal:"#d3b77f",weapon:"#66584a"},
  boss:{armor:"#6d4a4d",light:"#d2b28a",dark:"#302f35",cloth:"#4e4b58",metal:"#c6a06c",weapon:"#4c4141"}
 };
@@ -143,6 +149,6 @@ async function main(){
  const enemyDir=join(root,"enemies");await mkdir(enemyDir,{recursive:true});for(const kind of Object.keys(enemyPalettes)){await writeFile(join(enemyDir,kind+".svg"),enemySvg(kind),"utf8");}
  const manifest={schemaVersion:1,frameWidth:256,frameHeight:256,gutter:24,safePadding:24,trim:false,anchor:{x:128,y:226},enemies:Object.keys(enemyPalettes),heroes:Object.fromEntries(Object.entries(heroes).map(([hero])=>[hero,Object.fromEntries(Object.entries(animations).map(([anim,[frames,fps]])=>[anim,{frames,fps,pattern:`/assets/sprites/${hero}/${anim}/{frame}.svg`}]))]))};
  await writeFile(join(root,"manifest.json"),JSON.stringify(manifest,null,2)+"\n","utf8");
- console.log("Generated 205 individual SVG animation frames, 5 portraits and 3 enemy illustrations.");
+ console.log("Generated hero animation frames, 8 enemy classes and a boss.");
 }
 main().catch(error=>{console.error(error);process.exit(1);});
