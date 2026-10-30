@@ -4,6 +4,7 @@ This directory is populated by `npm run sprites` or automatically before `npm ru
 
 Generated output:
 - 5 transparent SVG character portraits.
+- 3 separate illustrated enemy types: grunt, elite and boss.
 - 205 individual SVG animation frames (5 heroes × 6 animation sets).
 - Each frame is a separate 256 × 256 image, with at least 24 px of safe padding and a fixed bottom-center foot anchor.
 - Frames are not tightly packed or auto-trimmed. Phaser loads each frame as an independent texture, so hair, weapons, cloaks and effects do not get cut by atlas slicing.
