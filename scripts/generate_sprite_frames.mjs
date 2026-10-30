@@ -18,7 +18,7 @@ function svgFrame(id, hero, anim, index, total) {
   const lean=anim==="attack"?Math.sin(index/Math.max(1,total-1)*Math.PI)*12:anim==="ultimate"?Math.sin(phase)*9:0;
   const alpha=anim==="hit"&&index===1?0.8:1;
   const weapon = p.weapon==="halberd"
-    ? '<path d="M194 178 L214 29" stroke="#51464a" stroke-width="7" stroke-linecap="round"/><path d="M197 64 Q180 39 192 24 Q208 38 214 28 Q228 39 215 66 Z" fill="#d4b47f" stroke="#574a48" stroke-width="4"/><path d="M194 58 L218 47" stroke="#f0dfbd" stroke-width="3"/>'
+    ? '<path d="M194 178 L214 29" stroke="#51464a" stroke-width="7" stroke-linecap="round"/><path d="M197 64 Q180 39 192 28 Q208 38 214 28 Q228 39 215 66 Z" fill="#d4b47f" stroke="#574a48" stroke-width="4"/><path d="M194 58 L218 47" stroke="#f0dfbd" stroke-width="3"/>'
     : p.weapon==="spear"
     ? '<path d="M196 191 L211 30" stroke="#604e42" stroke-width="6" stroke-linecap="round"/><path d="M211 27 L225 58 L211 50 L198 58 Z" fill="#c7d0bd" stroke="#455c57" stroke-width="3"/><path d="M207 55 L216 55" stroke="#f0e4c9" stroke-width="3"/>'
     : p.weapon==="fan"
@@ -50,7 +50,7 @@ function svgFrame(id, hero, anim, index, total) {
    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f0d7bc"/><stop offset="1" stop-color="#b9856c"/></linearGradient>
    <filter id="shadow" x="-30%" y="-20%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
   </defs>
-  <ellipse cx="128" cy="226" rx="47" ry="6" fill="#4d554d" opacity=".2" filter="url(#shadow)"/>
+  <ellipse cx="128" cy="226" rx="47" ry="4" fill="#4d554d" opacity=".2" filter="url(#shadow)"/>
   ${motion}
   ${dead}
    <g transform="translate(0 ${bob.toFixed(1)}) rotate(${lean.toFixed(1)} 128 145)" opacity="${alpha}">
@@ -66,7 +66,7 @@ function svgFrame(id, hero, anim, index, total) {
     <path d="M163 155 L177 175 L166 188 L153 177" fill="url(#skin)" stroke="${p.dark}" stroke-width="3"/>
     <path d="M103 205 L123 208 L119 225 L96 229 L87 222 Z" fill="${p.dark}" stroke="#393a36" stroke-width="3" transform="translate(${stride.toFixed(1)} 0)"/>
     <path d="M132 207 L154 204 L166 220 L159 229 L132 226 Z" fill="${p.dark}" stroke="#393a36" stroke-width="3" transform="translate(${(-stride).toFixed(1)} 0)"/>
-    <path d="M88 220 L119 222 L116 232 L82 232 Q77 227 88 220 M136 220 L164 219 L175 229 Q174 234 138 232 Z" fill="#4a403a" stroke="#292f2d" stroke-width="3"/>
+    <path d="M88 220 L119 222 L116 230 L82 230 Q77 227 88 220 M136 220 L164 219 L175 228 Q174 230 138 230 Z" fill="#4a403a" stroke="#292f2d" stroke-width="3"/>
     <path d="M103 114 Q92 92 104 73 L151 73 Q166 93 153 119 L145 137 L111 137 Z" fill="url(#metal)" stroke="${p.dark}" stroke-width="4"/>
     <path d="M109 119 L128 137 L148 119 L143 155 L128 166 L112 154 Z" fill="${p.main}" stroke="${p.dark}" stroke-width="3"/>
     <path d="M111 126 L128 143 L145 126" fill="none" stroke="${p.light}" stroke-width="5"/>
